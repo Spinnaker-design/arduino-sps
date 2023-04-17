@@ -58,12 +58,12 @@ void sensirion_i2c_release(void)
 {
 }
 
-int8_t sensirion_i2c_read(uint8_t address, uint8_t *data, uint16_t count)
+int8_t sensirion_i2c_read(uint8_t address, uint8_t *data, uint8_t count)
 {
     return I2c.read(address, count, data);
 }
 
-int8_t sensirion_i2c_write(uint8_t address, const uint8_t *data, uint16_t count)
+int8_t sensirion_i2c_write(uint8_t address, const uint8_t *data, uint8_t count)
 {
     // the API doesn't forsee calls without register, so we'll use the first
     // byte as "register", and pass the rest as data argument
@@ -90,7 +90,7 @@ void sensirion_i2c_release(void)
 {
 }
 
-int8_t sensirion_i2c_read(uint8_t address, uint8_t *data, uint16_t count) {
+int8_t sensirion_i2c_read(uint8_t address, uint8_t *data, uint8_t count) {
     uint8_t readData[count];
     uint8_t rxByteCount = 0;
 
@@ -109,7 +109,7 @@ int8_t sensirion_i2c_read(uint8_t address, uint8_t *data, uint16_t count) {
 }
 
 int8_t sensirion_i2c_write(uint8_t address, const uint8_t *data,
-                           uint16_t count) {
+                           uint8_t count) {
     Wire.beginTransmission(address);
     Wire.write(data, count);
     Wire.endTransmission();
