@@ -35,9 +35,6 @@
 // needed for delay() routine
 #include <Arduino.h>
 
-#ifdef __cplusplus
-extern "C" {
-#endif
 
 
 
@@ -129,6 +126,4 @@ void sensirion_sleep_usec(uint32_t useconds) {
     delay((useconds / 1000) + 1);
 }
 
-#ifdef __cplusplus
-}  // extern "C"
-#endif
+

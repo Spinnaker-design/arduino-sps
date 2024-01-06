@@ -34,6 +34,7 @@
 #include "sensirion_common.h"
 #include "sensirion_i2c.h"
 #include "sps_git_version.h"
+#include <Arduino.h>
 
 #define SPS_CMD_START_MEASUREMENT 0x0010
 #define SPS_CMD_START_MEASUREMENT_ARG 0x0300
@@ -82,6 +83,7 @@ int16_t sps30_get_serial(char* serial) {
     int16_t error;
 
     error = sensirion_i2c_write_cmd(SPS30_I2C_ADDRESS, SPS_CMD_GET_SERIAL);
+    
 
     if (error != NO_ERROR) {
         return error;
@@ -90,10 +92,13 @@ int16_t sps30_get_serial(char* serial) {
     error = sensirion_i2c_read_words_as_bytes(
         SPS30_I2C_ADDRESS, (uint8_t*)serial, SPS30_SERIAL_NUM_WORDS);
 
+    Serial.println(error);
+    
     /* ensure a final '\0'. The firmware should always set this so this is just
      * in case something goes wrong.
      */
     serial[SPS30_MAX_SERIAL_LEN - 1] = '\0';
+    Serial.println(serial);
 
     return error;
 }
@@ -238,6 +243,7 @@ int16_t sps30_wake_up(void) {
     /* wake-up must be sent twice within 100ms, ignore first return value */
     (void)sensirion_i2c_write_cmd(SPS30_I2C_ADDRESS, SPS_CMD_WAKE_UP);
     ret = sensirion_i2c_write_cmd(SPS30_I2C_ADDRESS, SPS_CMD_WAKE_UP);
+    
     if (ret)
         return ret;
 
